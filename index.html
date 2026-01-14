@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ITT TEKNOLOJİ A.Ş. | Dijital Dönüşümün Mimarları</title>
     
-    <!-- Fonts -->
+    <!-- Fonts: Inter (Apple-like system font stack) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -22,7 +22,7 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <!-- Supabase JS Client (Primary & Fallback) -->
+    <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script>
         if (typeof window.supabase === 'undefined') {
@@ -30,35 +30,40 @@
         }
     </script>
 
-    <!-- Tailwind Config -->
+    <!-- Tailwind Config for Apple Style -->
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
                         arabic: ['Tajawal', 'sans-serif'],
-                        brand: ['Oswald', 'sans-serif'], 
                     },
                     colors: {
-                        brand: {
-                            dark: '#0f172a',
-                            primary: '#19AFE6',
-                            secondary: '#0AB0CE',
-                            deep: '#184659',
-                            gray: '#6D6E71',
-                            surface: '#1e293b',
+                        apple: {
+                            bg: '#fbfbfd', // Apple page background
+                            surface: '#ffffff', // Card background
+                            blue: '#0071e3', // Action color
+                            text: '#1d1d1f', // Main text
+                            gray: '#86868b', // Secondary text
+                            border: '#d2d2d7',
+                            hover: '#f5f5f7'
                         }
                     },
+                    boxShadow: {
+                        'soft': '0 4px 24px rgba(0, 0, 0, 0.04)',
+                        'hover': '0 8px 32px rgba(0, 0, 0, 0.08)',
+                    },
                     animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'scroll': 'scroll 30s linear infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 8s ease-in-out infinite',
+                        'scroll': 'scroll 40s linear infinite',
+                        'fade-in': 'fadeIn 0.8s ease-out forwards',
                     },
                     keyframes: {
-                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } },
-                        scroll: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-100%)' } }
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-15px)' } },
+                        scroll: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-100%)' } },
+                        fadeIn: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } }
                     }
                 }
             }
@@ -66,88 +71,78 @@
     </script>
 
     <style>
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #184659; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #19AFE6; }
+        body {
+            background-color: #fbfbfd;
+            color: #1d1d1f;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
         
-        .glass-panel {
-            background: rgba(24, 70, 89, 0.4);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(25, 175, 230, 0.1);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* 3D Card Effect for Hero */
-        .hero-card-container {
-            perspective: 1000px;
-        }
-        .hero-card {
-            transform: rotateY(-10deg) rotateX(5deg);
-            transition: transform 0.5s ease;
-        }
-        .hero-card-container:hover .hero-card {
-            transform: rotateY(0deg) rotateX(0deg);
+        .glass-nav {
+            background: rgba(251, 251, 253, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
-        .text-gradient {
-            background: linear-gradient(135deg, #19AFE6 0%, #0AB0CE 100%);
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+        }
+
+        .hero-title-gradient {
+            background: linear-gradient(135deg, #1d1d1f 0%, #434344 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .hero-glow {
-            position: absolute; width: 800px; height: 800px;
-            background: radial-gradient(circle, rgba(25, 175, 230, 0.15) 0%, rgba(10, 176, 206, 0) 70%);
-            border-radius: 50%; pointer-events: none; z-index: 0;
+        
+        /* 3D Card Effect */
+        .hero-card-container { perspective: 1000px; }
+        .hero-card {
+            transform: rotateY(-5deg) rotateX(5deg);
+            transition: transform 0.5s ease;
         }
-        /* Scroller */
+        .hero-card-container:hover .hero-card { transform: rotateY(0deg) rotateX(0deg); }
+
         .scroller { max-width: 100%; }
         .scroller__inner { padding-block: 1rem; display: flex; flex-wrap: wrap; gap: 3rem; }
         .scroller[data-animated="true"] { overflow: hidden; mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent); }
         .scroller[data-animated="true"] .scroller__inner { width: max-content; flex-wrap: nowrap; animation: scroll 40s linear infinite; }
         
-        .modal-enter { opacity: 0; transform: scale(0.95); }
-        .modal-enter-active { opacity: 1; transform: scale(1); transition: opacity 300ms, transform 300ms; }
+        .modal-enter { opacity: 0; transform: scale(0.98); }
+        .modal-enter-active { opacity: 1; transform: scale(1); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
     </style>
 </head>
-<body class="bg-brand-dark text-slate-300 antialiased overflow-x-hidden">
+<body class="antialiased overflow-x-hidden selection:bg-apple-blue selection:text-white">
 
     <div id="root"></div>
 
     <script type="text/babel">
-        // useRef eklendi
         const { useState, useEffect, useMemo, useRef } = React;
 
         // --- SUPABASE CONFIGURATION ---
         const SUPABASE_URL = "https://pgdnoplfshyykcivtquh.supabase.co"; 
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBnZG5vcGxmc2h5eWtjaXZ0cXVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY5MDk1NDIsImV4cCI6MjA4MjQ4NTU0Mn0.CRvnf0p6wl6oZDwMbwYR0cu_rIzwC7n8qJQKmon9-rk";
         
-        // --- SAFE DECODE FUNCTION ---
-        // Türkçe karakter sorunlarını çözer ve hataları engeller
+        // --- UTILS ---
         const decodeText = (text) => {
             if (!text) return "";
-            try {
-                // Önce standart decode işlemini dene
-                return decodeURIComponent(escape(text));
-            } catch (e) {
-                // Eğer hata verirse (zaten düzgünse), olduğu gibi döndür
-                return text;
-            }
+            try { return decodeURIComponent(escape(text)); } catch (e) { return text; }
         };
 
-        // --- SAFE SUPABASE INITIALIZATION ---
         const waitForSupabase = async (timeout = 10000) => {
             const start = Date.now();
-            
             while (Date.now() - start < timeout) {
                 const sbLib = window.supabase;
-                
                 if (sbLib && typeof sbLib.createClient === 'function') {
-                    console.log("✅ Supabase kütüphanesi bulundu.");
                     return sbLib.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
                 }
-                
                 await new Promise(resolve => setTimeout(resolve, 500));
             }
             return null;
@@ -157,7 +152,7 @@
         const UI_LABELS = {
             tr: {
                 nav: { home: "Anasayfa", products: "Ürünler", services: "Hizmetler", blog: "Blog", contact: "İletişim" },
-                hero: { title: "Geleceği Kodluyoruz", subtitle: "Global Ölçekte", cta: "Keşfet", desc: "Bilişim Vadisi'nden dünyaya teknoloji ihraç ediyoruz." },
+                hero: { title: "Geleceği Kodluyoruz", subtitle: "Global Ölçekte", cta: "Keşfet", desc: "Bilişim Vadisinden dünyaya teknoloji ihraç ediyoruz." },
                 titles: { products: "Ürünlerimiz", services: "Hizmetlerimiz", blog: "Bilgi Merkezi", tech: "Teknolojilerimiz", contact: "İletişim" },
                 modal: { close: "Kapat", next: "Sonraki", prev: "Önceki" },
                 contact: { 
@@ -231,46 +226,6 @@
 
         // --- COMPONENTS ---
 
-        const DetailModal = ({ item, isOpen, onClose, onNext, onPrev, isRTL, t }) => {
-            if (!isOpen || !item) return null;
-
-            return (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" onClick={onClose}></div>
-                    <div className="relative bg-brand-surface w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl border border-white/10 shadow-2xl flex flex-col md:flex-row animate-enter">
-                        {item.image_url && (
-                            <div className="w-full md:w-1/3 h-64 md:h-auto relative">
-                                <img src={item.image_url} alt={decodeText(item.title)} className="w-full h-full object-cover" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-brand-surface to-transparent md:bg-gradient-to-r"></div>
-                            </div>
-                        )}
-                        <div className="p-8 md:p-10 flex-1 flex flex-col">
-                            <button onClick={onClose} className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} w-10 h-10 rounded-full bg-white/10 hover:bg-red-500/20 hover:text-red-500 flex items-center justify-center transition-colors`}>
-                                <i className="fa-solid fa-xmark"></i>
-                            </button>
-                            <div className="mb-6">
-                                <span className="text-brand-primary text-xs font-bold uppercase tracking-wider border border-brand-primary/30 px-2 py-1 rounded mb-3 inline-block">
-                                    {decodeText(item.category)}
-                                </span>
-                                <h2 className="text-3xl font-bold text-white font-brand mb-2">{decodeText(item.title)}</h2>
-                                {item.display_date && <div className="text-slate-500 text-sm"><i className="fa-regular fa-calendar mr-2"></i>{item.display_date}</div>}
-                            </div>
-                            <div className="prose prose-invert prose-sm max-w-none text-slate-300 mb-8 overflow-y-auto custom-scroll" 
-                                 dangerouslySetInnerHTML={{ __html: decodeText(item.content) }} />
-                            <div className="mt-auto flex justify-between pt-6 border-t border-white/10">
-                                <button onClick={onPrev} className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
-                                    <i className={`fa-solid fa-arrow-${isRTL ? 'right' : 'left'}`}></i> {t.modal.prev}
-                                </button>
-                                <button onClick={onNext} className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
-                                    {t.modal.next} <i className={`fa-solid fa-arrow-${isRTL ? 'left' : 'right'}`}></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        };
-
         const Navbar = ({ lang, setLang, t }) => {
             const [scrolled, setScrolled] = useState(false);
             const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -279,128 +234,94 @@
                 window.addEventListener('scroll', handleScroll);
                 return () => window.removeEventListener('scroll', handleScroll);
             }, []);
-            
-            const handleNavClick = (e) => {
-                e.preventDefault();
-                const targetId = e.target.getAttribute('href')?.substring(1);
-                if (targetId) {
-                    const element = document.getElementById(targetId);
-                    if (element) {
-                        element.scrollIntoView({ behavior: 'smooth' });
-                        setMobileMenuOpen(false);
-                    }
-                }
-            };
-            
             return (
-                <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'glass-panel py-3 shadow-2xl' : 'bg-transparent py-6'}`}>
-                    <div className="container mx-auto px-6 flex justify-between items-center relative">
+                <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'glass-nav py-3' : 'bg-transparent py-6'}`}>
+                    <div className="container mx-auto px-6 flex justify-between items-center">
                         <div className="flex items-center gap-3">
-                            <img src="https://ittyazilim.com/img/index/ITT_beyaz_web-01.svg" alt="ITT Logo" className="h-10 md:h-12" />
-                            <span className="font-brand text-2xl text-white tracking-wide hidden md:block">ITT TECHNOLOGY</span>
+                             {/* Dark Logo for Light Theme */}
+                            <div className="w-10 h-10 bg-apple-text rounded-lg flex items-center justify-center text-white">
+                                <i className="fa-solid fa-code"></i>
+                            </div>
+                            <span className="font-bold text-xl tracking-tight text-apple-text">ITT<span className="text-apple-blue">.Technology</span></span>
                         </div>
                         <div className="hidden lg:flex items-center gap-8">
                             {['home', 'products', 'services', 'blog', 'contact'].map(key => (
-                                <a key={key} href={`#${key}`} className="text-sm font-medium hover:text-brand-primary transition-colors">{t.nav[key]}</a>
+                                <a key={key} href={`#${key}`} className="text-sm font-medium text-apple-gray hover:text-apple-blue transition-colors">{t.nav[key]}</a>
                             ))}
-                            <div className="flex bg-brand-deep rounded-full p-1 border border-white/10">
+                            <div className="flex bg-gray-200 rounded-full p-1">
                                 {['tr', 'en', 'ar'].map((l) => (
-                                    <button key={l} onClick={() => setLang(l)} className={`px-3 py-1 text-xs font-bold rounded-full uppercase transition-all ${lang === l ? 'bg-brand-primary text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}>{l}</button>
+                                    <button key={l} onClick={() => setLang(l)} className={`px-3 py-1 text-xs font-bold rounded-full uppercase transition-all ${lang === l ? 'bg-white text-apple-text shadow-sm' : 'text-gray-500 hover:text-gray-800'}`}>{l}</button>
                                 ))}
                             </div>
                         </div>
-                        <div className="lg:hidden flex items-center gap-4">
-                            <div className="flex bg-brand-deep rounded-full p-1 border border-white/10">
-                                {['tr', 'en', 'ar'].map((l) => (
-                                    <button key={l} onClick={() => setLang(l)} className={`px-2 py-1 text-xs font-bold rounded-full uppercase transition-all ${lang === l ? 'bg-brand-primary text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}>{l}</button>
-                                ))}
-                            </div>
-                            <button 
-                                className="text-white cursor-pointer p-2 hover:text-brand-primary transition-colors" 
-                                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                                aria-label="Menu"
-                            >
-                                <i className={`fa-solid ${mobileMenuOpen ? 'fa-xmark' : 'fa-bars'} text-2xl`}></i>
-                            </button>
+                         <div className="lg:hidden text-apple-text cursor-pointer" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+                            <i className="fa-solid fa-bars text-2xl"></i>
                         </div>
                     </div>
-                    
-                    {/* Mobil Menü */}
-                    {mobileMenuOpen && (
-                        <div className="lg:hidden absolute top-full left-0 w-full bg-brand-surface border-t border-white/10 shadow-2xl">
-                            <div className="container mx-auto px-6 py-6 space-y-4">
-                                {['home', 'products', 'services', 'blog', 'contact'].map(key => (
-                                    <a 
-                                        key={key} 
-                                        href={`#${key}`} 
-                                        onClick={handleNavClick}
-                                        className="block text-sm font-medium text-white hover:text-brand-primary transition-colors py-2 border-b border-white/5 last:border-0"
-                                    >
-                                        {t.nav[key]}
-                                    </a>
-                                ))}
-                            </div>
-                        </div>
-                    )}
                 </nav>
             );
         };
 
         const Hero = ({ t }) => (
-            <header id="home" className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden min-h-screen flex items-center bg-brand-dark">
-                <div className="hero-glow top-0 left-0 -translate-x-1/2 -translate-y-1/2 opacity-40"></div>
-                <div className="hero-glow bottom-0 right-0 translate-x-1/2 translate-y-1/2 bg-brand-secondary/20 opacity-30"></div>
-                <div className="absolute inset-0 z-[-1] opacity-20" style={{backgroundImage: `linear-gradient(#184659 1px, transparent 1px), linear-gradient(90deg, #184659 1px, transparent 1px)`, backgroundSize: '40px 40px'}}></div>
+            <header id="home" className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex items-center min-h-screen">
+                <div className="hero-glow top-0 left-0 -translate-x-1/2 -translate-y-1/2 opacity-30 bg-blue-400"></div>
+                <div className="hero-glow bottom-0 right-0 translate-x-1/2 translate-y-1/2 opacity-30 bg-purple-400"></div>
                 
                 <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
-                    <div className="space-y-8 order-2 lg:order-1">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-deep border border-brand-primary/30 text-brand-primary text-xs font-bold uppercase tracking-wider shadow-lg">
-                            <i className="fa-solid fa-location-dot"></i> Bilişim Vadisi
+                    <div className="space-y-8 order-2 lg:order-1 animate-fade-in">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-gray-200 text-apple-text text-xs font-bold uppercase tracking-wider shadow-sm">
+                            <span className="w-2 h-2 rounded-full bg-green-500"></span> Bilişim Vadisi
                         </div>
-                        <h1 className="text-5xl lg:text-7xl font-extrabold leading-tight text-white font-brand uppercase tracking-tight">
-                            {t.hero.title} <br /> <span className="text-gradient">{t.hero.subtitle}</span>
+                        <h1 className="text-5xl lg:text-7xl font-bold leading-tight tracking-tight text-apple-text">
+                            {t.hero.title} <br /> <span className="text-apple-blue">{t.hero.subtitle}</span>
                         </h1>
-                        <p className="text-lg text-slate-400 max-w-xl leading-relaxed">{t.hero.desc}</p>
-                        <a href="#products" className="inline-block px-8 py-4 bg-gradient-to-r from-brand-primary to-brand-secondary text-white rounded-lg font-bold shadow-lg hover:shadow-brand-primary/25 transition-all transform hover:-translate-y-1">
-                            {t.hero.cta}
-                        </a>
+                        <p className="text-xl text-apple-gray max-w-lg leading-relaxed font-light">{t.hero.desc}</p>
+                        <div className="flex gap-4">
+                            <a href="#products" className="inline-block px-8 py-4 bg-apple-blue text-white rounded-full font-medium shadow-lg shadow-blue-500/30 hover:bg-blue-600 transition-all hover:scale-105">
+                                {t.hero.cta}
+                            </a>
+                            <a href="#contact" className="inline-block px-8 py-4 bg-white text-apple-text border border-gray-200 rounded-full font-medium hover:bg-gray-50 transition-all">
+                                {t.nav.contact}
+                            </a>
+                        </div>
                     </div>
                     
-                    {/* Visual Enhancement for Empty Space */}
                     <div className="order-1 lg:order-2 relative hero-card-container flex justify-center items-center">
                         <div className="hero-card relative w-full max-w-md aspect-square">
-                            {/* Abstract Floating Element */}
-                            <div className="absolute inset-0 bg-brand-deep/30 backdrop-blur-md rounded-3xl border border-white/10 shadow-2xl animate-float flex flex-col justify-between p-6 overflow-hidden">
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-primary/40 blur-[50px] rounded-full"></div>
-                                <div className="absolute bottom-0 left-0 w-32 h-32 bg-brand-secondary/40 blur-[50px] rounded-full"></div>
+                            <div className="absolute inset-0 bg-white/60 backdrop-blur-xl rounded-[2.5rem] border border-white/40 shadow-2xl animate-float flex flex-col justify-between p-8 overflow-hidden">
+                                <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full blur-2xl opacity-60"></div>
                                 
-                                <div className="flex justify-between items-center border-b border-white/5 pb-4">
+                                <div className="relative z-10 flex justify-between items-center">
                                     <div className="flex gap-2">
-                                        <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                                        <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                                        <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                                        <div className="w-3 h-3 rounded-full bg-[#FF5F57]"></div>
+                                        <div className="w-3 h-3 rounded-full bg-[#FEBC2E]"></div>
+                                        <div className="w-3 h-3 rounded-full bg-[#28C840]"></div>
                                     </div>
-                                    <div className="text-xs font-mono text-slate-400">itt_core_system.v2</div>
-                                </div>
-                                
-                                <div className="space-y-3 font-mono text-sm">
-                                    <div className="flex items-center gap-2 text-brand-primary"><i className="fa-solid fa-check"></i> <span>AI Module Loaded</span></div>
-                                    <div className="flex items-center gap-2 text-brand-secondary"><i className="fa-solid fa-check"></i> <span>Database Connected</span></div>
-                                    <div className="flex items-center gap-2 text-green-400"><i className="fa-solid fa-check"></i> <span>Security: High</span></div>
+                                    <div className="px-3 py-1 bg-white/50 rounded-full text-[10px] font-mono font-bold text-apple-gray">v2.0.4</div>
                                 </div>
 
-                                <div className="mt-4 p-4 bg-black/20 rounded-xl border border-white/5">
-                                    <div className="text-xs text-slate-400 mb-2">Total Transactions</div>
-                                    <div className="text-3xl font-bold text-white">2.4M+</div>
-                                    <div className="h-1 w-full bg-brand-deep mt-2 rounded-full overflow-hidden">
-                                        <div className="h-full w-[85%] bg-gradient-to-r from-brand-primary to-brand-secondary animate-pulse"></div>
+                                <div className="relative z-10 mt-8 space-y-4">
+                                    <div className="flex items-center gap-4 p-3 bg-white/80 rounded-2xl shadow-sm">
+                                        <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center text-apple-blue"><i className="fa-solid fa-code"></i></div>
+                                        <div className="flex-1">
+                                            <div className="h-2 w-24 bg-gray-200 rounded mb-1"></div>
+                                            <div className="h-2 w-16 bg-gray-100 rounded"></div>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-4 p-3 bg-white/80 rounded-2xl shadow-sm">
+                                        <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center text-purple-500"><i className="fa-solid fa-cloud"></i></div>
+                                        <div className="flex-1">
+                                            <div className="h-2 w-32 bg-gray-200 rounded mb-1"></div>
+                                            <div className="h-2 w-20 bg-gray-100 rounded"></div>
+                                        </div>
                                     </div>
                                 </div>
+                                
+                                <div className="relative z-10 mt-auto pt-8">
+                                    <div className="text-4xl font-bold text-apple-text tracking-tighter">99.9%</div>
+                                    <div className="text-sm text-apple-gray">System Uptime</div>
+                                </div>
                             </div>
-                            
-                            {/* Decorative Elements */}
-                            <div className="absolute -z-10 top-10 -right-10 w-24 h-24 bg-brand-secondary rounded-full blur-xl opacity-20 animate-pulse-slow"></div>
-                            <div className="absolute -z-10 -bottom-10 -left-10 w-32 h-32 bg-brand-primary rounded-full blur-xl opacity-20 animate-pulse-slow" style={{animationDelay: '1s'}}></div>
                         </div>
                     </div>
                 </div>
@@ -410,54 +331,36 @@
         const ContentSection = ({ id, type, title, items, onSelect, lang, t, isLoading }) => {
             const filteredItems = items.filter(i => i.type === type && i.lang === lang);
             
-            // Skeleton Loader (İskelet Yükleme Ekranı)
-            if (isLoading) {
-                 return (
-                    <section id={id} className={`py-24 relative ${type === 'service' ? 'bg-brand-dark' : 'bg-brand-surface'} border-t border-white/5`}>
-                        <div className="container mx-auto px-6">
-                            <div className="text-center max-w-3xl mx-auto mb-20 animate-pulse">
-                                <div className="h-8 bg-white/10 rounded w-1/3 mx-auto mb-6"></div>
-                                <div className="h-1 w-24 bg-white/10 mx-auto"></div>
-                            </div>
-                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {[1,2,3].map(i => (
-                                    <div key={i} className="h-96 rounded-2xl bg-white/5 animate-pulse border border-white/5"></div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-                 );
-            }
-
+            if (isLoading) return <div className="py-24 text-center"><i className="fa-solid fa-circle-notch fa-spin text-3xl text-apple-gray"></i></div>;
             if (filteredItems.length === 0) return null;
 
             return (
-                <section id={id} className={`py-24 relative ${type === 'service' ? 'bg-brand-dark' : 'bg-brand-surface'} border-t border-white/5`}>
+                <section id={id} className={`py-24 ${type === 'service' ? 'bg-white' : 'bg-apple-bg'}`}>
                     <div className="container mx-auto px-6">
                         <div className="text-center max-w-3xl mx-auto mb-20">
-                            <h2 className="text-4xl font-bold text-white font-brand mb-6">{title}</h2>
-                            <div className="h-1 w-24 bg-gradient-to-r from-brand-primary to-transparent mx-auto"></div>
+                            <h2 className="text-4xl font-bold text-apple-text mb-4 tracking-tight">{title}</h2>
+                            <div className="h-1 w-20 bg-apple-blue mx-auto rounded-full"></div>
                         </div>
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {filteredItems.map((item) => (
-                                <div key={item.id} onClick={() => onSelect(item)} className="group relative bg-brand-dark border border-white/5 rounded-2xl p-8 hover:border-brand-primary/50 transition-all duration-300 hover:-translate-y-2 cursor-pointer overflow-hidden shadow-lg">
+                                <div key={item.id} onClick={() => onSelect(item)} className="card-hover group bg-white rounded-3xl p-8 cursor-pointer shadow-soft border border-gray-100 flex flex-col h-full overflow-hidden relative">
                                     {type === 'blog' ? (
-                                        <div className="h-48 -mx-8 -mt-8 mb-6 overflow-hidden">
+                                        <div className="h-56 -mx-8 -mt-8 mb-6 overflow-hidden relative">
                                             {item.image_url ? 
-                                                <img src={item.image_url} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={item.title}/>
-                                                : <div className="w-full h-full bg-brand-deep flex items-center justify-center"><i className="fa-solid fa-image text-4xl opacity-20"></i></div>
+                                                <img src={item.image_url} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt={item.title}/>
+                                                : <div className="w-full h-full bg-gray-100 flex items-center justify-center"><i className="fa-solid fa-image text-4xl text-gray-300"></i></div>
                                             }
                                         </div>
                                     ) : (
-                                        <div className="w-16 h-16 rounded-2xl bg-brand-deep/50 border border-white/10 flex items-center justify-center mb-6 group-hover:bg-brand-primary transition-colors">
-                                            <i className={`fa-solid ${item.icon || 'fa-layer-group'} text-3xl text-brand-primary group-hover:text-white`}></i>
+                                        <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center mb-6 text-2xl text-apple-text group-hover:bg-apple-blue group-hover:text-white transition-colors duration-300">
+                                            <i className={`fa-solid ${item.icon || 'fa-layer-group'}`}></i>
                                         </div>
                                     )}
-                                    <div className="text-xs font-bold text-brand-primary mb-2 uppercase tracking-wider">{decodeText(item.category)}</div>
-                                    <h3 className="text-2xl font-bold text-white mb-3 font-brand">{decodeText(item.title)}</h3>
-                                    <p className="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-3">{decodeText(item.summary)}</p>
-                                    <div className="text-brand-secondary font-bold text-sm mt-auto inline-flex items-center gap-2 group-hover:gap-3 transition-all">
-                                        Detayları Gör <i className="fa-solid fa-arrow-right"></i>
+                                    <div className="text-xs font-bold text-apple-blue mb-2 uppercase tracking-wider">{decodeText(item.category)}</div>
+                                    <h3 className="text-2xl font-bold text-apple-text mb-3 leading-snug">{decodeText(item.title)}</h3>
+                                    <p className="text-apple-gray text-sm leading-relaxed mb-6 line-clamp-3">{decodeText(item.summary)}</p>
+                                    <div className="mt-auto flex items-center text-apple-text font-semibold text-sm group-hover:translate-x-2 transition-transform">
+                                        İncele <i className="fa-solid fa-arrow-right ml-2 text-apple-blue"></i>
                                     </div>
                                 </div>
                             ))}
@@ -471,20 +374,24 @@
             const techs = ["devicon-react-original", "devicon-nextjs-original", "devicon-python-plain", "devicon-docker-plain", "devicon-amazonwebservices-plain-wordmark", "devicon-kubernetes-plain", "devicon-postgresql-plain"];
             useEffect(() => {
                 const scrollers = document.querySelectorAll(".scroller");
-                scrollers.forEach((scroller) => {
+                scrollers.forEach(scroller => {
                     scroller.setAttribute("data-animated", "true");
-                    const scrollerInner = scroller.querySelector(".scroller__inner");
-                    const scrollerContent = Array.from(scrollerInner.children);
-                    scrollerContent.forEach((item) => {
-                        const duplicatedItem = item.cloneNode(true);
-                        duplicatedItem.setAttribute("aria-hidden", "true");
-                        scrollerInner.appendChild(duplicatedItem);
+                    const inner = scroller.querySelector(".scroller__inner");
+                    const content = Array.from(inner.children);
+                    content.forEach(item => {
+                        const dup = item.cloneNode(true);
+                        dup.setAttribute("aria-hidden", "true");
+                        inner.appendChild(dup);
                     });
                 });
             }, []);
             return (
-                <section className="py-10 bg-brand-surface/30 border-y border-white/5 overflow-hidden">
-                     <div className="scroller w-full"><div className="scroller__inner">{techs.map((icon, i) => (<i key={i} className={`${icon} text-5xl text-slate-500 mx-8`}></i>))}</div></div>
+                <section className="py-12 bg-white border-y border-gray-100 overflow-hidden">
+                     <div className="scroller w-full opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                         <div className="scroller__inner">
+                             {techs.map((icon, i) => (<i key={i} className={`${icon} text-5xl mx-8`}></i>))}
+                         </div>
+                     </div>
                 </section>
             );
         }
@@ -500,16 +407,9 @@
                 setServerError(null); 
                 
                 const isTest = isTestRef.current;
-                
-                // Webhook URL'leri
-                const TEST_URL = 'https://n8n.ittyazilim.com/webhook-test/itt_iletisim';
-                const PROD_URL = 'https://n8n.ittyazilim.com/webhook/itt_iletisim';
-                
-                // Hedef URL'yi belirle (Shift tuşu kontrolü ile)
-                let targetUrl = isTest ? TEST_URL : PROD_URL;
-                const envMode = isTest ? 'test' : 'production';
+                const webhookUrl = isTest ? 'https://n8n.ittyazilim.com/webhook-test/itt_iletisim' : 'https://n8n.ittyazilim.com/webhook/itt_iletisim';
 
-                console.log(`🚀 Gönderim Başlatılıyor... Mod: ${envMode.toUpperCase()} (${targetUrl})`);
+                console.log(`📡 Gönderim -> ${isTest ? 'TEST' : 'PROD'}`);
                 
                 const form = e.target;
                 const formData = {
@@ -518,148 +418,103 @@
                     phone: form.phone.value,
                     message: form.message.value,
                     submittedAt: new Date().toISOString(),
-                    environment: envMode
+                    environment: isTest ? 'test' : 'production'
                 };
                 
-                // Fetch fonksiyonunu sarmalayan yardımcı fonksiyon
-                const sendRequest = async (url) => {
-                     // text/plain kullanarak CORS preflight (OPTIONS) sorgusunu atlatıyoruz.
-                     const response = await fetch(url, {
+                try {
+                    const response = await fetch(webhookUrl, {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'text/plain;charset=utf-8'
-                        },
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                         body: JSON.stringify(formData)
                     });
-                    
-                    if (!response.ok) {
-                        throw { status: response.status, statusText: response.statusText };
-                    }
-                    return response;
-                };
 
-                try {
-                    // İlk deneme
-                    await sendRequest(targetUrl);
-                    
-                    // Başarılı olursa
-                    console.log("✅ Veri n8n'e başarıyla gönderildi.");
-                    setFormStatus('success');
-                    form.reset();
-                    isTestRef.current = false;
-                    setTimeout(() => setFormStatus('idle'), 5000);
-
-                } catch (error) {
-                    console.warn(`⚠️ İlk deneme başarısız (${targetUrl}):`, error);
-
-                    // Eğer Test modundaysak ve 404 aldıysak (Editör açık değilse),
-                    // Otomatik olarak Prod ortamına yönlendir (Failover)
-                    if (isTest && error.status === 404) {
-                        console.log("🔄 Test webhook aktif değil, Production webhook'una yönlendiriliyor (Failover)...");
-                        
-                        try {
-                            // Prod'a gönder ama 'test' etiketini koru
-                            await sendRequest(PROD_URL);
-                            
-                            console.log("✅ Failover başarılı: Veri Production URL'ine iletildi.");
-                            setFormStatus('success'); // Kullanıcıya başarılı göster
-                            form.reset();
-                            isTestRef.current = false;
-                            setTimeout(() => setFormStatus('idle'), 5000);
-                            return; // Çıkış
-                            
-                        } catch (prodError) {
-                            console.error('❌ Prod Failover da başarısız:', prodError);
-                            setFormStatus('error');
-                            setServerError(`Sunucu Hatası: ${prodError.status || 'Bilinmiyor'}`);
-                        }
+                    if (response.ok) {
+                        setFormStatus('success');
+                        form.reset();
+                        isTestRef.current = false;
+                        setTimeout(() => setFormStatus('idle'), 5000);
                     } else {
-                        // Diğer hata durumları
-                        setFormStatus('error');
-                        
-                        let errorMsg = "Bir hata oluştu.";
-                        if (error.status === 404) errorMsg = "Webhook bulunamadı (404).";
-                        else if (error.status === 500) errorMsg = "Sunucu hatası (500).";
-                        
-                        setServerError(errorMsg);
+                        if (response.status === 404) throw new Error(`Webhook Aktif Değil (404)`);
+                        throw new Error(`Hata: ${response.status}`);
                     }
+                } catch (error) {
+                    console.error('❌ Hata:', error);
+                    setFormStatus('error');
+                    setServerError(error.message);
                     setTimeout(() => setFormStatus('idle'), 5000);
                 }
             };
 
             return (
-                <section id="contact" className="py-24 bg-brand-surface border-t border-white/5 relative overflow-hidden">
+                <section id="contact" className="py-24 bg-white relative overflow-hidden">
                     <div className="container mx-auto px-6">
-                        <div className="grid lg:grid-cols-2 gap-12 items-center">
+                        <div className="grid lg:grid-cols-2 gap-16 items-center">
                             <div>
-                                <span className="text-brand-primary font-bold tracking-widest text-sm uppercase mb-2 block">{t.contact.title}</span>
-                                <h2 className="text-4xl font-bold text-white font-brand mb-6">{t.contact.subtitle}</h2>
-                                <p className="text-slate-400 mb-8">{t.contact.desc}</p>
+                                <span className="text-apple-blue font-bold tracking-widest text-sm uppercase mb-2 block">{t.contact.title}</span>
+                                <h2 className="text-4xl font-bold text-apple-text mb-6">{t.contact.subtitle}</h2>
+                                <p className="text-apple-gray mb-10 text-lg">{t.contact.desc}</p>
                                 
-                                <div className="space-y-6">
-                                    <div className="flex items-start gap-4">
-                                        <div className="w-10 h-10 rounded bg-brand-dark border border-white/10 flex items-center justify-center text-brand-primary flex-shrink-0">
+                                <div className="space-y-8">
+                                    <div className="flex items-start gap-5">
+                                        <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center text-apple-text text-xl">
                                             <i className="fa-solid fa-location-dot"></i>
                                         </div>
                                         <div>
-                                            <h4 className="text-white font-bold mb-1">{t.contact.addressTitle}</h4>
-                                            <a href="https://maps.app.goo.gl/4aMsExnAdxv3EhZb8" target="_blank" rel="noopener noreferrer" className="text-sm text-slate-400 leading-relaxed hover:text-brand-primary transition-colors cursor-pointer block">Muallimköy Mah. Deniz Cad. Muallimköy T.G.B. 1.Etap 1.1.C1 Blok No: 143/8 İç Kapı No: 201 Gebze / Kocaeli</a>
+                                            <h4 className="text-apple-text font-bold mb-1">{t.contact.addressTitle}</h4>
+                                            <p className="text-apple-gray leading-relaxed">Muallimköy Mah. Deniz Cad. Muallimköy T.G.B.<br/>1.Etap 1.1.C1 Blok No: 143/8 Gebze / Kocaeli</p>
                                         </div>
                                     </div>
-                                    <div className="flex items-start gap-4">
-                                        <div className="w-10 h-10 rounded bg-brand-dark border border-white/10 flex items-center justify-center text-brand-primary flex-shrink-0">
+                                    <div className="flex items-start gap-5">
+                                        <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center text-apple-text text-xl">
                                             <i className="fa-solid fa-envelope"></i>
                                         </div>
                                         <div>
-                                            <h4 className="text-white font-bold mb-1">{t.contact.emailTitle}</h4>
-                                            <a href="mailto:info@ittyazilim.com" className="text-sm text-slate-400 hover:text-brand-primary transition-colors">info@ittyazilim.com</a>
+                                            <h4 className="text-apple-text font-bold mb-1">{t.contact.emailTitle}</h4>
+                                            <p className="text-apple-gray">info@ittyazilim.com</p>
                                         </div>
                                     </div>
-                                    <div className="flex items-start gap-4">
-                                        <div className="w-10 h-10 rounded bg-brand-dark border border-white/10 flex items-center justify-center text-brand-primary flex-shrink-0">
+                                    <div className="flex items-start gap-5">
+                                        <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center text-apple-text text-xl">
                                             <i className="fa-solid fa-phone"></i>
                                         </div>
                                         <div>
-                                            <h4 className="text-white font-bold mb-1">{t.contact.phoneTitle}</h4>
-                                            <p className="text-sm text-slate-400"><a href="tel:+905332685783" className="hover:text-brand-primary transition-colors">+90 533 268 57 83</a></p>
+                                            <h4 className="text-apple-text font-bold mb-1">{t.contact.phoneTitle}</h4>
+                                            <p className="text-apple-gray"><a href="tel:+905332685783" className="hover:text-apple-blue transition-colors">+90 533 268 57 83</a></p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             
-                            <div className="bg-brand-dark p-8 rounded-2xl border border-white/10 shadow-2xl">
-                                <form className="space-y-4" onSubmit={handleSubmit}>
-                                    <div className="grid md:grid-cols-2 gap-4">
-                                        <input type="text" name="name" placeholder={t.contact.name} required className="w-full bg-brand-surface border border-white/10 rounded-lg p-3 text-white focus:border-brand-primary outline-none transition-colors" />
-                                        <input type="text" name="phone" placeholder={t.contact.phone} required className="w-full bg-brand-surface border border-white/10 rounded-lg p-3 text-white focus:border-brand-primary outline-none transition-colors" />
+                            <div className="bg-gray-50 p-8 md:p-10 rounded-[2.5rem] shadow-sm border border-gray-100">
+                                <form className="space-y-5" onSubmit={handleSubmit}>
+                                    <div className="grid md:grid-cols-2 gap-5">
+                                        <input type="text" name="name" placeholder={t.contact.name} required className="w-full bg-white border border-gray-200 rounded-xl p-4 text-apple-text focus:border-apple-blue focus:ring-2 focus:ring-blue-100 outline-none transition-all" />
+                                        <input type="text" name="phone" placeholder={t.contact.phone} required className="w-full bg-white border border-gray-200 rounded-xl p-4 text-apple-text focus:border-apple-blue focus:ring-2 focus:ring-blue-100 outline-none transition-all" />
                                     </div>
-                                    <input type="email" name="email" placeholder={t.contact.email} required className="w-full bg-brand-surface border border-white/10 rounded-lg p-3 text-white focus:border-brand-primary outline-none transition-colors" />
-                                    <textarea rows="4" name="message" placeholder={t.contact.msg} required className="w-full bg-brand-surface border border-white/10 rounded-lg p-3 text-white focus:border-brand-primary outline-none transition-colors"></textarea>
+                                    <input type="email" name="email" placeholder={t.contact.email} required className="w-full bg-white border border-gray-200 rounded-xl p-4 text-apple-text focus:border-apple-blue focus:ring-2 focus:ring-blue-100 outline-none transition-all" />
+                                    <textarea rows="4" name="message" placeholder={t.contact.msg} required className="w-full bg-white border border-gray-200 rounded-xl p-4 text-apple-text focus:border-apple-blue focus:ring-2 focus:ring-blue-100 outline-none transition-all"></textarea>
                                     
                                     <button 
                                         type="submit" 
-                                        onClick={(e) => { 
-                                            // Butona tıklama anındaki shift durumunu yakala
-                                            isTestRef.current = e.shiftKey; 
-                                        }}
+                                        onClick={(e) => { isTestRef.current = e.shiftKey; }}
                                         disabled={formStatus === 'submitting'} 
-                                        className={`w-full py-4 rounded-lg text-white font-bold transition-all flex items-center justify-center gap-2 group ${formStatus === 'submitting' ? 'bg-gray-600 cursor-not-allowed' : 'bg-gradient-to-r from-brand-primary to-brand-secondary hover:shadow-lg hover:shadow-brand-primary/20'}`}
+                                        className={`w-full py-4 rounded-xl text-white font-bold text-lg transition-all flex items-center justify-center gap-2 group ${formStatus === 'submitting' ? 'bg-gray-400 cursor-not-allowed' : 'bg-apple-text hover:bg-black hover:shadow-lg'}`}
                                     >
                                         {formStatus === 'submitting' ? (
-                                            <><i className="fa-solid fa-circle-notch fa-spin"></i> Gönderiliyor...</>
+                                            <><i className="fa-solid fa-circle-notch fa-spin"></i></>
                                         ) : (
-                                            <>{t.contact.btn} <i className="fa-solid fa-paper-plane group-hover:translate-x-1 transition-transform"></i></>
+                                            <>{t.contact.btn} <i className="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i></>
                                         )}
                                     </button>
                                     
                                     {formStatus === 'success' && (
-                                        <div className="p-3 bg-green-500/20 border border-green-500/50 rounded-lg text-green-200 text-sm text-center animate-pulse-slow">
+                                        <div className="p-4 bg-green-50 text-green-700 rounded-xl text-center font-medium">
                                             <i className="fa-solid fa-check-circle mr-2"></i> {t.contact.success}
                                         </div>
                                     )}
                                     
                                     {formStatus === 'error' && (
-                                        <div className="p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-200 text-sm text-center animate-pulse-slow">
+                                        <div className="p-4 bg-red-50 text-red-700 rounded-xl text-center font-medium">
                                             <i className="fa-solid fa-circle-exclamation mr-2"></i> {serverError || t.contact.error}
                                         </div>
                                     )}
@@ -671,19 +526,63 @@
             );
         };
 
+        const DetailModal = ({ item, isOpen, onClose, onNext, onPrev, isRTL, t }) => {
+            if (!isOpen || !item) return null;
+
+            return (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-fade-in">
+                    <div className="absolute inset-0 bg-white/80 backdrop-blur-md transition-opacity" onClick={onClose}></div>
+                    <div className="relative bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl flex flex-col md:flex-row border border-gray-100">
+                        {item.image_url && (
+                            <div className="w-full md:w-1/3 h-64 md:h-auto relative">
+                                <img src={item.image_url} alt={decodeText(item.title)} className="w-full h-full object-cover" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent md:bg-gradient-to-r md:from-transparent md:to-black/10"></div>
+                            </div>
+                        )}
+                        <div className="p-10 flex-1 flex flex-col">
+                            <button onClick={onClose} className={`absolute top-6 ${isRTL ? 'left-6' : 'right-6'} w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 flex items-center justify-center transition-colors z-10`}>
+                                <i className="fa-solid fa-xmark"></i>
+                            </button>
+                            <div className="mb-8 mt-4 md:mt-0">
+                                <span className="text-apple-blue text-xs font-bold uppercase tracking-wider bg-blue-50 px-3 py-1 rounded-full mb-4 inline-block">
+                                    {decodeText(item.category)}
+                                </span>
+                                <h2 className="text-3xl font-bold text-apple-text mb-3 leading-tight">{decodeText(item.title)}</h2>
+                                {item.display_date && <div className="text-apple-gray text-sm font-medium"><i className="fa-regular fa-calendar mr-2"></i>{item.display_date}</div>}
+                            </div>
+                            <div className="prose prose-slate max-w-none text-apple-text mb-8 overflow-y-auto custom-scroll leading-relaxed" 
+                                 dangerouslySetInnerHTML={{ __html: decodeText(item.content) }} />
+                            <div className="mt-auto flex justify-between pt-6 border-t border-gray-100">
+                                <button onClick={onPrev} className="flex items-center gap-2 text-apple-gray hover:text-apple-text transition-colors font-medium">
+                                    <i className={`fa-solid fa-arrow-${isRTL ? 'right' : 'left'}`}></i> {t.modal.prev}
+                                </button>
+                                <button onClick={onNext} className="flex items-center gap-2 text-apple-gray hover:text-apple-text transition-colors font-medium">
+                                    {t.modal.next} <i className={`fa-solid fa-arrow-${isRTL ? 'left' : 'right'}`}></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
         const Footer = ({ t }) => (
-            <footer className="bg-[#0B1120] border-t border-white/5 py-12 text-sm relative overflow-hidden">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-1 bg-gradient-to-r from-transparent via-brand-primary to-transparent"></div>
-                <div className="container mx-auto px-6 grid md:grid-cols-4 gap-12 text-slate-400">
+            <footer className="bg-gray-50 border-t border-gray-200 py-16 text-sm">
+                <div className="container mx-auto px-6 grid md:grid-cols-4 gap-12 text-apple-gray">
                     <div className="md:col-span-1">
-                        <img src="https://ittyazilim.com/img/index/ITT_beyaz_web-01.svg" alt="Logo" className="h-8 mb-6" />
+                        <div className="flex items-center gap-2 mb-6">
+                            <div className="w-8 h-8 bg-apple-text rounded-md flex items-center justify-center text-white text-xs">
+                                <i className="fa-solid fa-code"></i>
+                            </div>
+                            <span className="font-bold text-apple-text">ITT TEKNOLOJİ</span>
+                        </div>
                         <p className="leading-relaxed text-xs">
                             Information Transformation Technology.<br/>
                             Veriyi bilgiye, bilgiyi değere dönüştürüyoruz.
                         </p>
                     </div>
                     <div>
-                        <h4 className="text-white font-bold mb-4">Adres</h4>
+                        <h4 className="text-apple-text font-bold mb-4">Adres</h4>
                         <p className="text-xs leading-loose">
                             Muallimköy Mah. Deniz Cad.<br/>
                             Muallimköy T.G.B. 1.Etap 1.1.C1 Blok<br/>
@@ -692,25 +591,25 @@
                         </p>
                     </div>
                     <div>
-                        <h4 className="text-white font-bold mb-4">Ürünler</h4>
-                        <ul className="space-y-2 text-xs">
-                            <li><a href="#" className="hover:text-brand-primary">AID360 ERP</a></li>
-                            <li><a href="#" className="hover:text-brand-primary">KOBASİS</a></li>
-                            <li><a href="#" className="hover:text-brand-primary">ITTSAR</a></li>
-                            <li><a href="#" className="hover:text-brand-primary">KVS Video</a></li>
+                        <h4 className="text-apple-text font-bold mb-4">Site Haritası</h4>
+                        <ul className="space-y-3 text-xs font-medium">
+                            <li><a href="#products" className="hover:text-apple-blue transition-colors">Ürünler</a></li>
+                            <li><a href="#services" className="hover:text-apple-blue transition-colors">Hizmetler</a></li>
+                            <li><a href="#blog" className="hover:text-apple-blue transition-colors">Blog</a></li>
+                            <li><a href="#contact" className="hover:text-apple-blue transition-colors">İletişim</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 className="text-white font-bold mb-4">Sosyal Medya</h4>
+                        <h4 className="text-apple-text font-bold mb-4">Sosyal Medya</h4>
                          <div className="flex gap-4">
-                            <a href="#" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all"><i className="fa-brands fa-linkedin-in"></i></a>
-                            <a href="#" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all"><i className="fa-brands fa-twitter"></i></a>
-                            <a href="#" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-primary hover:text-white transition-all"><i className="fa-brands fa-instagram"></i></a>
+                            <a href="#" className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center hover:bg-apple-blue hover:text-white transition-all border border-gray-100"><i className="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#" className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center hover:bg-apple-blue hover:text-white transition-all border border-gray-100"><i className="fa-brands fa-twitter"></i></a>
+                            <a href="#" className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center hover:bg-apple-blue hover:text-white transition-all border border-gray-100"><i className="fa-brands fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>
-                <div className="text-center mt-12 pt-8 border-t border-white/5 text-xs text-slate-600">
-                    &copy; 2025 ITT TEKNOLOJİ A.Ş. All rights reserved.
+                <div className="text-center mt-16 pt-8 border-t border-gray-200 text-xs text-gray-400">
+                    &copy; 2026 ITT TEKNOLOJİ A.Ş. Tüm hakları saklıdır.
                 </div>
             </footer>
         );
@@ -725,16 +624,12 @@
             
             const t = UI_LABELS[lang];
 
-            // 1. Fetch Data from Supabase
             useEffect(() => {
                 const fetchData = async () => {
                     setIsLoading(true);
-                    
-                    // Supabase client'ını güvenli şekilde al ve başlat
                     const client = await waitForSupabase();
                     
                     if (!client) {
-                        console.error("Supabase client 5 deneme sonunda da oluşturulamadı.");
                         setError("MISSING_KEYS");
                         setIsLoading(false);
                         return;
@@ -747,16 +642,12 @@
                             .eq('is_active', true)
                             .order('created_at', { ascending: false }); 
                         
-                        if (error) {
-                            console.error("Supabase sorgu hatası:", error);
-                            throw error;
-                        }
+                        if (error) throw error;
                         
-                        console.log("✅ Veri çekildi:", data?.length, "kayıt");
                         setDbItems(data || []);
                         setError(null);
                     } catch (err) {
-                        console.error("❌ Supabase Error:", err);
+                        console.error("Supabase Error:", err);
                         setError("FETCH_ERROR");
                     } finally {
                         setIsLoading(false);
@@ -766,51 +657,34 @@
                 fetchData();
             }, []);
 
-            // Filter logic
+            // Filter & Navigation Logic
             const currentItems = useMemo(() => {
                 if (!selectedItem) return [];
                 return dbItems.filter(i => i.type === selectedItem.type && i.lang === lang);
             }, [selectedItem, lang, dbItems]);
 
-            // Navigation Handlers
             const handleNext = () => {
-                const currentIndex = currentItems.findIndex(i => i.id === selectedItem.id);
-                const nextIndex = (currentIndex + 1) % currentItems.length;
-                setSelectedItem(currentItems[nextIndex]);
+                const idx = currentItems.findIndex(i => i.id === selectedItem.id);
+                setSelectedItem(currentItems[(idx + 1) % currentItems.length]);
             };
 
             const handlePrev = () => {
-                const currentIndex = currentItems.findIndex(i => i.id === selectedItem.id);
-                const prevIndex = (currentIndex - 1 + currentItems.length) % currentItems.length;
-                setSelectedItem(currentItems[prevIndex]);
+                const idx = currentItems.findIndex(i => i.id === selectedItem.id);
+                setSelectedItem(currentItems[(idx - 1 + currentItems.length) % currentItems.length]);
             };
 
             useEffect(() => {
                 document.documentElement.lang = lang;
                 document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-                document.body.classList.toggle('font-arabic', lang === 'ar');
-                document.body.classList.toggle('font-sans', lang !== 'ar');
             }, [lang]);
 
             return (
-                <div className="min-h-screen flex flex-col">
+                <div className="min-h-screen flex flex-col bg-apple-bg font-sans text-apple-text">
                     <Navbar lang={lang} setLang={setLang} t={t} />
                     <Hero t={t} />
-                    <TechStack t={t} />
+                    <TechStack />
                     
-                    {error === "MISSING_KEYS" && (
-                        <div className="bg-red-500/20 text-red-200 p-4 text-center border border-red-500/50 m-4 rounded">
-                            {t.error}
-                        </div>
-                    )}
-
-                    {error === "LIB_ERROR" && (
-                        <div className="bg-red-500/20 text-red-200 p-4 text-center border border-red-500/50 m-4 rounded">
-                            {t.libError}
-                        </div>
-                    )}
-
-                    {/* Dynamic Sections from Supabase */}
+                    {/* Content Sections */}
                     <ContentSection id="products" type="product" title={t.titles.products} items={dbItems} onSelect={setSelectedItem} lang={lang} t={t} isLoading={isLoading} />
                     <ContentSection id="services" type="service" title={t.titles.services} items={dbItems} onSelect={setSelectedItem} lang={lang} t={t} isLoading={isLoading} />
                     <ContentSection id="blog" type="blog" title={t.titles.blog} items={dbItems} onSelect={setSelectedItem} lang={lang} t={t} isLoading={isLoading} />
@@ -827,9 +701,7 @@
                         t={t}
                     />
 
-                    <footer className="bg-[#0B1120] py-8 text-center text-xs text-slate-600 border-t border-white/5">
-                        &copy; 2025 ITT TEKNOLOJİ A.Ş.
-                    </footer>
+                    <Footer t={t} />
                 </div>
             );
         };
